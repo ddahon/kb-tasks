@@ -13,7 +13,8 @@ edition = "2021"
 tauri-build = { version = "1.4", features = [] }
 
 [dependencies]
-tauri = { version = "1.4", features = ["shell-open", "global-shortcut"] }
+tauri = { version = "1.4", features = ["shell-open", "global-shortcut", "system-tray"] }
+gtk = "0.15.5"
 serde = { version = "1.0", features = ["derive"] }
 serde_json = "1.0"
 
