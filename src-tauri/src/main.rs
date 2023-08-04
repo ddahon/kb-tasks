@@ -9,7 +9,7 @@ use tauri::{
     SystemTrayEvent, SystemTrayMenu, SystemTraySubmenu, Window,
 };
 
-const TOGGLE_SHORTCUT: &str = "Ctrl+Shift+Space";
+const TOGGLE_SHORTCUT: &str = "Ctrl+Alt+Space";
 
 fn main() {
     tauri::Builder::default()
@@ -20,7 +20,7 @@ fn main() {
         .expect("error while running tauri application")
         .run(move |app_handle, e| match e {
             // Application is ready (triggered only once)
-            RunEvent::Ready => register_shortcut(app_handle),
+            RunEvent::Ready => register_shortcuts(app_handle),
             _ => (),
         });
 }
@@ -38,7 +38,7 @@ fn build_system_tray() -> SystemTray {
     SystemTray::new().with_menu(system_tray_menu)
 }
 
-fn register_shortcut(app_handle: &AppHandle) {
+fn register_shortcuts(app_handle: &AppHandle) {
     let app_handle = app_handle.clone();
     app_handle
         .global_shortcut_manager()
@@ -57,8 +57,6 @@ fn toggle_window(app_handle: &AppHandle) {
         match window.is_focused() {
             Ok(false) => {
                 show_window_gtk(&window);
-                //window.show().unwrap();
-                //window.set_focus().unwrap();
             }
             Ok(true) => {
                 window.hide().unwrap();

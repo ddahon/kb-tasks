@@ -1,6 +1,10 @@
 <script lang="ts">
   let widthVw = 50;
   let heightVh = 4;
+
+  window.addEventListener("focus", () => {
+    document.getElementById("main-bar").focus();
+  });
 </script>
 
 <!-- svelte-ignore a11y-autofocus -->
