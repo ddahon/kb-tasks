@@ -54,15 +54,13 @@ async fn toggle_window_js(app_handle: AppHandle) {
 fn toggle_window(app_handle: &AppHandle) {
     let app_handle = app_handle.clone();
     if let Some(window) = app_handle.get_window("main") {
-        match window.is_visible() {
+        match window.is_focused() {
             Ok(false) => {
-                println!("jour");
                 show_window_gtk(&window);
                 //window.show().unwrap();
                 //window.set_focus().unwrap();
             }
             Ok(true) => {
-                println!("nuit");
                 window.hide().unwrap();
             }
             Err(e) => eprintln!("{}", e),
@@ -79,7 +77,6 @@ fn show_window_gtk(window: &Window) {
                 .as_secs()
                 .try_into()
                 .unwrap();
-            println!("{}", timestamp);
             gtk_window.present();
             gtk_window.present_with_time(timestamp);
         }

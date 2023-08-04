@@ -2,9 +2,9 @@
   import Bar from "./Bar.svelte";
   import { addOutsideClickHandler } from "./utils";
 
-  addOutsideClickHandler()
+  addOutsideClickHandler();
 </script>
 
 <main>
-  <Bar/>
+  <Bar />
 </main>
