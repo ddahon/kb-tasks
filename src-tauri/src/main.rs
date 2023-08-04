@@ -56,9 +56,11 @@ fn toggle_window(app_handle: &AppHandle) {
     if let Some(window) = app_handle.get_window("main") {
         match window.is_focused() {
             Ok(false) => {
+                println!("show");
                 show_window_gtk(&window);
             }
             Ok(true) => {
+                println!("hide");
                 window.hide().unwrap();
             }
             Err(e) => eprintln!("{}", e),

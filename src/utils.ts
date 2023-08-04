@@ -9,4 +9,12 @@ function addOutsideClickHandler() {
   });
 }
 
-export { addOutsideClickHandler };
+function addEscHandler() {
+  document.onkeydown = (e: KeyboardEvent) => {
+    if (e.key == "Escape") {
+      invoke("toggle_window_js").catch((e) => console.error(e));
+    }
+  };
+}
+
+export { addOutsideClickHandler, addEscHandler };
