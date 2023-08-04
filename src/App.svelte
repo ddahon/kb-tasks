@@ -1,3 +1,8 @@
-<main class="container">
-  <h1>Todoapp</h1>
+<script>
+  import Bar from "./Bar.svelte";
+
+</script>
+
+<main>
+  <Bar/>
 </main>

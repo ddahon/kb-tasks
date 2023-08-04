@@ -9,7 +9,7 @@ use tauri::{
     SystemTrayEvent, SystemTrayMenu, SystemTraySubmenu, Window,
 };
 
-const TOGGLE_SHORTCUT: &str = "Ctrl+Shift+,";
+const TOGGLE_SHORTCUT: &str = "Ctrl+Shift+Space";
 
 fn main() {
     tauri::Builder::default()
@@ -75,7 +75,7 @@ fn show_window_gtk(window: &Window) {
                 .unwrap();
             println!("{}", timestamp);
             gtk_window.present();
-            gtk_window.present_with_time(timestamp + 1);
+            gtk_window.present_with_time(timestamp);
         }
         Err(_) => (),
     }

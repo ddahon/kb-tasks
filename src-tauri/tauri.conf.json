@@ -20,6 +20,9 @@
       "shell": {
         "all": false,
         "open": true
+      },
+      "window": {
+        "setSize": true
       }
     },
     "bundle": {
@@ -32,11 +35,13 @@
     },
     "windows": [
       {
-        "fullscreen": false,
+        "fullscreen": true,
         "resizable": true,
         "title": "todoapp",
-        "width": 800,
-        "height": 600
+        "skipTaskbar": true,
+        "decorations": false,
+        "center": true,
+        "transparent": true
       }
     ]
   }
