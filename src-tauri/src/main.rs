@@ -15,6 +15,7 @@ fn main() {
     tauri::Builder::default()
         .system_tray(build_system_tray())
         .on_system_tray_event(|app, event| register_tray_events(&app, event))
+        .invoke_handler(tauri::generate_handler![toggle_window_js])
         .build(tauri::generate_context!())
         .expect("error while running tauri application")
         .run(move |app_handle, e| match e {
@@ -43,6 +44,11 @@ fn register_shortcut(app_handle: &AppHandle) {
         .global_shortcut_manager()
         .register(TOGGLE_SHORTCUT, move || toggle_window(&app_handle))
         .unwrap();
+}
+
+#[tauri::command]
+async fn toggle_window_js(app_handle: AppHandle) {
+    toggle_window(&app_handle)
 }
 
 fn toggle_window(app_handle: &AppHandle) {

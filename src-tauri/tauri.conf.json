@@ -35,12 +35,11 @@
     },
     "windows": [
       {
-        "fullscreen": true,
-        "resizable": true,
+        "maximized": true,
+        "resizable": false,
         "title": "todoapp",
         "skipTaskbar": true,
         "decorations": false,
-        "center": true,
         "transparent": true
       }
     ]
