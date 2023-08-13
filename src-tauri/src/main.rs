@@ -1,18 +1,26 @@
 // Prevents additional console window on Windows in release, DO NOT REMOVE!!
 #![cfg_attr(not(debug_assertions), windows_subsystem = "windows")]
 
+use std::sync::Mutex;
+
 use tauri::RunEvent;
 
 mod global_shortcuts;
+mod tasks;
 mod tray;
+mod utils;
 mod window;
 
 fn main() {
     tauri::Builder::default()
         .system_tray(tray::build_system_tray())
         .on_window_event(|event| window::handle_window_events(event))
+        .manage(tasks::TodolistState(Mutex::new(Vec::new())))
         .on_system_tray_event(|app, event| tray::handle_tray_events(&app, event))
-        .invoke_handler(tauri::generate_handler![window::toggle_window_js])
+        .invoke_handler(tauri::generate_handler![
+            window::toggle_window_js,
+            utils::print_rust
+        ])
         .build(tauri::generate_context!())
         .expect("error while running tauri application")
         .run(move |app_handle, e| match e {

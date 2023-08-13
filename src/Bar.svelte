@@ -1,20 +1,34 @@
 <script lang="ts">
+  import { invoke } from "@tauri-apps/api/tauri";
+
   let widthVw = 50;
   let heightVh = 4;
+
+  let input = "";
 
   window.addEventListener("focus", () => {
     document.getElementById("main-bar").focus();
   });
+
+  function handleSubmit(event: SubmitEvent) {
+    event.preventDefault();
+    invoke("print_rust", {
+      msg: input,
+    });
+  }
 </script>
 
 <!-- svelte-ignore a11y-autofocus -->
-<input
-  autofocus
-  style="--width: {widthVw}vw; --height: {heightVh}vh; --margin-top: -{heightVh /
-    2}vh; --margin-left: -{widthVw / 2}vw"
-  id="main-bar"
-  type="text"
-/>
+<form on:submit={handleSubmit}>
+  <input
+    autofocus
+    style="--width: {widthVw}vw; --height: {heightVh}vh; --margin-top: -{heightVh /
+      2}vh; --margin-left: -{widthVw / 2}vw"
+    id="main-bar"
+    type="text"
+    bind:value={input}
+  />
+</form>
 
 <style>
   #main-bar {
