@@ -1,5 +1,6 @@
 <script lang="ts">
   import { invoke } from "@tauri-apps/api/tauri";
+  import { todolist } from "./store";
 
   let widthVw = 50;
   let heightVh = 4;
@@ -12,9 +13,9 @@
 
   function handleSubmit(event: SubmitEvent) {
     event.preventDefault();
-    invoke("print_rust", {
-      msg: input,
-    });
+    invoke("add_todo", {
+      desc: input,
+    }).then((res) => todolist.set([res as Task, ...$todolist]));
   }
 </script>
 

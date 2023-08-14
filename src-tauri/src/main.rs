@@ -3,7 +3,7 @@
 
 use std::sync::Mutex;
 
-use tauri::RunEvent;
+use tauri::{Manager, RunEvent, Window};
 
 mod global_shortcuts;
 mod tasks;
@@ -19,8 +19,19 @@ fn main() {
         .on_system_tray_event(|app, event| tray::handle_tray_events(&app, event))
         .invoke_handler(tauri::generate_handler![
             window::toggle_window_js,
-            utils::print_rust
+            utils::print_rust,
+            tasks::get_todolist,
+            tasks::add_todo
         ])
+        .setup(|app| {
+            #[cfg(debug_assertions)] // only include this code on debug builds
+            {
+                let window = app.get_window("main").unwrap();
+                window.open_devtools();
+                window.close_devtools();
+            }
+            Ok(())
+        })
         .build(tauri::generate_context!())
         .expect("error while running tauri application")
         .run(move |app_handle, e| match e {
