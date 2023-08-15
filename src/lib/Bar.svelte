@@ -1,6 +1,6 @@
 <script lang="ts">
   import { invoke } from "@tauri-apps/api/tauri";
-  import { todolist } from "./store";
+  import { todolist } from "../store";
 
   let widthVw = 50;
   let heightVh = 4;

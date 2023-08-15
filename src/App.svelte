@@ -1,5 +1,5 @@
 <script lang="ts">
-  import Bar from "./Bar.svelte";
+  import Bar from "./lib/Bar.svelte";
   import { addOutsideClickHandler, addEscHandler } from "./utils";
   import { invoke } from "@tauri-apps/api/tauri";
   import { todolist } from "./store";
