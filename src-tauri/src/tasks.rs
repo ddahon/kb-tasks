@@ -1,8 +1,12 @@
-use std::sync::Mutex;
+use std::{
+    fs::{self, File},
+    io::{Error, Write},
+    sync::Mutex,
+};
 
 use tauri::State;
 
-#[derive(Clone, serde::Serialize)]
+#[derive(Clone, serde::Serialize, serde::Deserialize)]
 pub struct Task {
     pub id: u32,
     pub title: String,
@@ -23,6 +27,25 @@ pub fn add_todo(desc: &str, todolist: State<TodolistState>) -> Task {
         title: "TODO".to_string(),
         desc: desc.to_string(),
     };
-    todolist.0.lock().unwrap().push(new_task.clone());
+    let mut l = todolist.0.lock().unwrap();
+    l.push(new_task.clone());
+    save(l.clone()).unwrap();
     return new_task;
+}
+
+pub fn load() -> Vec<Task> {
+    let path = "/tmp/todoapp.save";
+    let contents = fs::read_to_string(path);
+    match contents {
+        Err(_) => Vec::new(),
+        Ok(s) => serde_json::from_str::<Vec<Task>>(&s).unwrap(),
+    }
+}
+
+fn save(todolist: Vec<Task>) -> Result<(), Error> {
+    let path = "/tmp/todoapp.save";
+
+    let mut output = File::create(path)?;
+    write!(output, "{}", serde_json::to_string(&todolist).unwrap()).unwrap();
+    Ok(())
 }

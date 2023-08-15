@@ -15,7 +15,7 @@ fn main() {
     tauri::Builder::default()
         .system_tray(tray::build_system_tray())
         .on_window_event(|event| window::handle_window_events(event))
-        .manage(tasks::TodolistState(Mutex::new(Vec::new())))
+        .manage(tasks::TodolistState(Mutex::new(tasks::load())))
         .on_system_tray_event(|app, event| tray::handle_tray_events(&app, event))
         .invoke_handler(tauri::generate_handler![
             window::toggle_window_js,
