@@ -7,21 +7,24 @@
   let heightVh = 4;
   let input = "";
   let show_dropdown = false;
+  let dropdown: HTMLElement;
 
-  window.addEventListener("focus", () => {
+  function on_focus(e: FocusEvent) {
     document.getElementById("main-bar").focus();
-  });
+  }
 
-  window.addEventListener("keydown", (e) => {
-    let key = (e as KeyboardEvent).key;
-    if (!show_dropdown && key == "ArrowDown") {
-      console.log("show dropdown");
+  function on_key_down(e: KeyboardEvent) {
+    if (!show_dropdown && e.key == "ArrowDown") {
       show_dropdown = true;
-    } else if (show_dropdown && key == "ArrowUp") {
-      console.log("hide dropdown");
+      dropdown.focus();
+    } else if (
+      show_dropdown &&
+      document.activeElement == dropdown &&
+      e.key == "ArrowUp"
+    ) {
       show_dropdown = false;
     }
-  });
+  }
 
   function handleSubmit(event: SubmitEvent) {
     event.preventDefault();
@@ -30,6 +33,8 @@
     }).then((res) => todolist.set([res as Task, ...$todolist]));
   }
 </script>
+
+<svelte:window on:keydown={on_key_down} on:focus={on_focus} />
 
 <!-- svelte-ignore a11y-autofocus -->
 <div
@@ -47,7 +52,7 @@
   </form>
 
   {#if show_dropdown}
-    <Dropdown />
+    <Dropdown bind:this={dropdown} />
   {/if}
 </div>
 
