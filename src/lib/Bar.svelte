@@ -7,22 +7,28 @@
   let heightVh = 4;
   let input = "";
   let show_dropdown = false;
-  let dropdown: HTMLElement;
+  let dropdown;
 
   function on_focus(e: FocusEvent) {
     document.getElementById("main-bar").focus();
   }
 
+  function open_dropdown() {
+    show_dropdown = true;
+  }
+
+  function close_dropdown() {
+    show_dropdown = false;
+  }
   function on_key_down(e: KeyboardEvent) {
     if (!show_dropdown && e.key == "ArrowDown") {
-      show_dropdown = true;
-      dropdown.focus();
+      open_dropdown();
     } else if (
       show_dropdown &&
       document.activeElement == dropdown &&
       e.key == "ArrowUp"
     ) {
-      show_dropdown = false;
+      close_dropdown();
     }
   }
 
@@ -52,7 +58,7 @@
   </form>
 
   {#if show_dropdown}
-    <Dropdown bind:this={dropdown} />
+    <Dropdown bind:this={dropdown} on:close={close_dropdown} />
   {/if}
 </div>
 

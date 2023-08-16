@@ -2,19 +2,30 @@
   import { get } from "svelte/store";
   import { todolist } from "../store";
   import TaskItem from "./TaskItem.svelte";
+  import { createEventDispatcher, onMount } from "svelte";
 
+  const dispatch = createEventDispatcher();
+  let dropdown;
   let focused_id = 0;
+  let nb_tasks = get(todolist).length;
+
+  onMount(() => {
+    dropdown.focus();
+  });
 
   function on_key_down(e: KeyboardEvent) {
     if (e.key == "ArrowDown") {
-      focused_id++;
+      focused_id = (focused_id + 1) % nb_tasks;
     } else if (e.key == "ArrowUp") {
+      if (focused_id == 0) {
+        dispatch("close");
+      }
       focused_id--;
     }
   }
 </script>
 
-<div id="dropdown">
+<div id="dropdown" bind:this={dropdown}>
   <ul>
     {#each get(todolist) as { id, title, desc }, i}
       <TaskItem {desc} id={i} {focused_id} />
