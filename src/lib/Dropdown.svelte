@@ -1,5 +1,4 @@
 <script lang="ts">
-  import { get } from "svelte/store";
   import { todolist } from "../store";
   import TaskItem from "./TaskItem.svelte";
   import { createEventDispatcher, onMount } from "svelte";
@@ -7,7 +6,7 @@
   const dispatch = createEventDispatcher();
   let dropdown;
   let focused_id = 0;
-  let nb_tasks = get(todolist).length;
+  let nb_tasks = $todolist.length;
 
   onMount(() => {
     dropdown.focus();
@@ -27,7 +26,7 @@
 
 <div id="dropdown" bind:this={dropdown}>
   <ul>
-    {#each get(todolist) as { id, title, desc }, i}
+    {#each $todolist as { id, title, desc }, i}
       <TaskItem {desc} id={i} {focused_id} />
     {/each}
   </ul>
