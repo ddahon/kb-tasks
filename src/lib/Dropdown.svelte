@@ -24,7 +24,7 @@
   }
 </script>
 
-<div id="dropdown" bind:this={dropdown}>
+<div id="dropdown" bind:this={dropdown} tabindex="-1">
   <ul>
     {#each $todolist as { id, title, desc }, i}
       <TaskItem {desc} id={i} {focused_id} />

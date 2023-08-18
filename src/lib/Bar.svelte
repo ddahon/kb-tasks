@@ -6,6 +6,7 @@
   let widthVw = 50;
   let heightVh = 4;
   let input = "";
+  let inputElement;
   let show_dropdown = false;
   let dropdown;
 
@@ -19,6 +20,7 @@
 
   function close_dropdown() {
     show_dropdown = false;
+    inputElement.focus();
   }
   function on_key_down(e: KeyboardEvent) {
     if (!show_dropdown && e.key == "ArrowDown") {
@@ -54,6 +56,7 @@
       style="--height: {heightVh}vh"
       type="text"
       bind:value={input}
+      bind:this={inputElement}
     />
   </form>
 
