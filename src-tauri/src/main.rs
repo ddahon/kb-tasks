@@ -21,7 +21,8 @@ fn main() {
             window::toggle_window_js,
             utils::print_rust,
             tasks::get_todolist,
-            tasks::add_todo
+            tasks::add_todo,
+            tasks::complete_task,
         ])
         .setup(|app| {
             #[cfg(debug_assertions)] // only include this code on debug builds

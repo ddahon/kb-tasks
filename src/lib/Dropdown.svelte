@@ -1,27 +1,33 @@
 <script lang="ts">
-  import { todolist } from "../store";
+  import { todolist, completeTask } from "../store";
   import TaskItem from "./TaskItem.svelte";
   import { createEventDispatcher, onMount } from "svelte";
 
   const dispatch = createEventDispatcher();
   let dropdown;
   let focused_id = 0;
-  let nb_tasks = $todolist.length;
+  $: nb_tasks = $todolist.length;
+
+  function on_key_down(e: KeyboardEvent) {
+    switch (e.key) {
+      case "ArrowDown":
+        focused_id = (focused_id + 1) % nb_tasks;
+        break;
+      case "ArrowUp":
+        if (focused_id == 0) {
+          dispatch("close");
+        }
+        focused_id--;
+        break;
+      case "Enter":
+        completeTask(focused_id);
+        break;
+    }
+  }
 
   onMount(() => {
     dropdown.focus();
   });
-
-  function on_key_down(e: KeyboardEvent) {
-    if (e.key == "ArrowDown") {
-      focused_id = (focused_id + 1) % nb_tasks;
-    } else if (e.key == "ArrowUp") {
-      if (focused_id == 0) {
-        dispatch("close");
-      }
-      focused_id--;
-    }
-  }
 </script>
 
 <div id="dropdown" bind:this={dropdown} tabindex="-1">

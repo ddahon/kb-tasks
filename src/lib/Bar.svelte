@@ -1,6 +1,6 @@
 <script lang="ts">
   import { invoke } from "@tauri-apps/api/tauri";
-  import { todolist } from "../store";
+  import { addTodo, todolist } from "../store";
   import Dropdown from "./Dropdown.svelte";
 
   let widthVw = 50;
@@ -36,9 +36,7 @@
 
   function handleSubmit(event: SubmitEvent) {
     event.preventDefault();
-    invoke("add_todo", {
-      desc: input,
-    }).then((res) => todolist.set([res as Task, ...$todolist]));
+    addTodo(input);
   }
 </script>
 
