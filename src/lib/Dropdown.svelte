@@ -9,7 +9,6 @@
   $: nb_tasks = $todolist.length;
 
   function on_key_down(e: KeyboardEvent) {
-    console.log(e);
     switch (e.key) {
       case "ArrowDown":
         focused_id = (focused_id + 1) % nb_tasks;
@@ -21,7 +20,7 @@
         focused_id--;
         break;
       case "Enter":
-        completeTask(focused_id);
+        completeTask($todolist[focused_id].id);
         break;
     }
   }

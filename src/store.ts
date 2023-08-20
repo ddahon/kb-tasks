@@ -5,7 +5,6 @@ export const todolist = writable([]);
 
 export function addTodo(desc: String) {
   invoke("add_todo", { desc }).then(refreshTodolist);
-  invoke("save");
 }
 
 export function completeTask(id: number) {
@@ -13,6 +12,7 @@ export function completeTask(id: number) {
 }
 
 export function refreshTodolist() {
+  invoke("save");
   invoke("get_todolist").then((res) => todolist.set(res as Task[]));
 }
 
