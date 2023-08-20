@@ -3,6 +3,7 @@
   import { addOutsideClickHandler, addEscHandler } from "./utils";
   import { invoke } from "@tauri-apps/api/tauri";
   import { todolist } from "./store";
+  import type { Task } from "./types/task";
 
   addOutsideClickHandler();
   addEscHandler();

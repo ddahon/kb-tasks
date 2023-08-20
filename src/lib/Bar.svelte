@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { addTodo, todolist } from "../store";
+  import { addTodo, getNotCompleted, todolist } from "../store";
   import Dropdown from "./Dropdown.svelte";
 
   let widthVw = 50;
@@ -8,6 +8,8 @@
   let inputElement;
   let show_dropdown = false;
   let dropdown;
+
+  $: notCompletedTasks = getNotCompleted($todolist);
 
   function on_focus(e: FocusEvent) {
     document.getElementById("main-bar").focus();
@@ -22,7 +24,11 @@
     inputElement.focus();
   }
   function on_key_down(e: KeyboardEvent) {
-    if (!show_dropdown && e.key == "ArrowDown" && $todolist.length > 0) {
+    if (
+      !show_dropdown &&
+      e.key == "ArrowDown" &&
+      notCompletedTasks.length > 0
+    ) {
       open_dropdown();
     } else if (
       show_dropdown &&
@@ -58,7 +64,11 @@
   </form>
 
   {#if show_dropdown}
-    <Dropdown bind:this={dropdown} on:close={close_dropdown} />
+    <Dropdown
+      bind:this={dropdown}
+      on:close={close_dropdown}
+      tasks={notCompletedTasks}
+    />
   {/if}
 </div>
 
