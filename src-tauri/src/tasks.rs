@@ -32,9 +32,10 @@ pub fn get_todolist(todolist: State<TodolistState>) -> Vec<Task> {
 pub fn add_todo(desc: &str, todolist: State<TodolistState>) {
     let mut l = todolist.0.lock().unwrap();
     let new_id = l.iter().fold(0, |acc, t| std::cmp::max(acc, t.id)) + 1;
+    println!("new id: {}", new_id);
     let new_task = Task {
         id: new_id,
-        title: "TODO".to_string(),
+        title: "".to_string(),
         desc: desc.to_string(),
         status: TaskStatus::Created,
     };

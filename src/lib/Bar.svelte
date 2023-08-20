@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { addTodo } from "../store";
+  import { addTodo, todolist } from "../store";
   import Dropdown from "./Dropdown.svelte";
 
   let widthVw = 50;
@@ -22,7 +22,7 @@
     inputElement.focus();
   }
   function on_key_down(e: KeyboardEvent) {
-    if (!show_dropdown && e.key == "ArrowDown") {
+    if (!show_dropdown && e.key == "ArrowDown" && $todolist.length > 0) {
       open_dropdown();
     } else if (
       show_dropdown &&
