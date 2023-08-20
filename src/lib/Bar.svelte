@@ -42,6 +42,7 @@
   function handleSubmit(event: SubmitEvent) {
     event.preventDefault();
     addTodo(input);
+    input = "";
   }
 </script>
 
