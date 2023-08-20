@@ -23,6 +23,7 @@ fn main() {
             tasks::get_todolist,
             tasks::add_todo,
             tasks::complete_task,
+            tasks::save,
         ])
         .setup(|app| {
             #[cfg(debug_assertions)] // only include this code on debug builds

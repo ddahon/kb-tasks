@@ -30,15 +30,15 @@ pub fn get_todolist(todolist: State<TodolistState>) -> Vec<Task> {
 
 #[tauri::command]
 pub fn add_todo(desc: &str, todolist: State<TodolistState>) {
+    let mut l = todolist.0.lock().unwrap();
+    let new_id = l.iter().fold(0, |acc, t| std::cmp::max(acc, t.id)) + 1;
     let new_task = Task {
-        id: 0,
+        id: new_id,
         title: "TODO".to_string(),
         desc: desc.to_string(),
         status: TaskStatus::Created,
     };
-    let mut l = todolist.0.lock().unwrap();
     l.push(new_task.clone());
-    save(l.clone()).unwrap();
 }
 
 #[tauri::command]
@@ -49,7 +49,6 @@ pub fn complete_task(id: u32, todolist: State<TodolistState>) {
             (*t).status = TaskStatus::Completed;
         }
     }
-    println!("finito");
 }
 
 pub fn load() -> Vec<Task> {
@@ -61,10 +60,15 @@ pub fn load() -> Vec<Task> {
     }
 }
 
-fn save(todolist: Vec<Task>) -> Result<(), Error> {
+#[tauri::command]
+pub fn save(todolist: State<TodolistState>) {
     let path = "/tmp/todoapp.save";
 
-    let mut output = File::create(path)?;
-    write!(output, "{}", serde_json::to_string(&todolist).unwrap()).unwrap();
-    Ok(())
+    let mut output = File::create(path).unwrap();
+    write!(
+        output,
+        "{}",
+        serde_json::to_string(&todolist.0.lock().unwrap().clone()).unwrap()
+    )
+    .unwrap();
 }

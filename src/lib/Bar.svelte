@@ -1,6 +1,5 @@
 <script lang="ts">
-  import { invoke } from "@tauri-apps/api/tauri";
-  import { addTodo, todolist } from "../store";
+  import { addTodo } from "../store";
   import Dropdown from "./Dropdown.svelte";
 
   let widthVw = 50;

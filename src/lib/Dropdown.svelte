@@ -38,7 +38,10 @@
   </ul>
 </div>
 
-<svelte:window on:keydown={on_key_down} />
+<svelte:window
+  on:keydown={on_key_down}
+  on:visibilitychange={() => dispatch("close")}
+/>
 
 <style>
   #dropdown {

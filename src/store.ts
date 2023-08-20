@@ -5,6 +5,7 @@ export const todolist = writable([]);
 
 export function addTodo(desc: String) {
   invoke("add_todo", { desc }).then(refreshTodolist);
+  invoke("save");
 }
 
 export function completeTask(id: number) {
