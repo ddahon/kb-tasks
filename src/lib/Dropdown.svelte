@@ -1,5 +1,10 @@
 <script lang="ts">
-  import { todolist, completeTask, getNotCompleted } from "../store";
+  import {
+    todolist,
+    completeTask,
+    getNotCompleted,
+    deleteTask,
+  } from "../store";
   import TaskItem from "./TaskItem.svelte";
   import { createEventDispatcher, onMount } from "svelte";
 
@@ -29,6 +34,11 @@
         break;
       case "Enter":
         completeTask(tasks[focused_id].id);
+        break;
+      case "Delete":
+      case "Backspace":
+        console.log("delete");
+        deleteTask(tasks[focused_id].id);
         break;
     }
   }

@@ -52,6 +52,16 @@ pub fn complete_task(id: u32, todolist: State<TodolistState>) {
     }
 }
 
+#[tauri::command]
+pub fn delete_task(id: u32, todolist: State<TodolistState>) {
+    let l: &mut Vec<Task> = &mut *todolist.0.lock().unwrap();
+    for t in l {
+        if t.id == id {
+            (*t).status = TaskStatus::Deleted;
+        }
+    }
+}
+
 pub fn load() -> Vec<Task> {
     let path = "/tmp/todoapp.save";
     let contents = fs::read_to_string(path);

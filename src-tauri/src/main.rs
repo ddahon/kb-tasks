@@ -22,6 +22,7 @@ fn main() {
             utils::print_rust,
             tasks::get_todolist,
             tasks::add_todo,
+            tasks::delete_task,
             tasks::complete_task,
             tasks::save,
         ])

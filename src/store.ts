@@ -23,4 +23,8 @@ export function getNotCompleted(l: Task[]) {
   return notCompleted;
 }
 
+export function deleteTask(id: number) {
+  invoke("delete_task", { id }).then(refreshTodolist);
+}
+
 todolist.subscribe((value) => console.log(value));
