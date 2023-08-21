@@ -41,8 +41,10 @@
 
   function handleSubmit(event: SubmitEvent) {
     event.preventDefault();
-    addTodo(input);
-    input = "";
+    if (input != "") {
+        addTodo(input);
+        input = "";
+    }
   }
 </script>
 
